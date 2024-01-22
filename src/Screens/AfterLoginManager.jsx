@@ -1,24 +1,15 @@
 import React from 'react';
 import { useState , useEffect} from 'react';
+import background from "../CSS/background.jpg";
+import Footer from '../Components/Footer';
 import Navbar2 from '../Components/Navbar2';
 import {  useNavigate } from 'react-router-dom';
-import Footer from '../Components/Footer';
 // import '../CSS/Afterloginmanager.css'
-
 const AfterLoginManager = () => {
-const abc ={
-  backgroundColor:"yello"
-}
-
-
-
-
+  const formstyle={ color: 'rgb(84 6 70)',fontFamily:'sans-serif',fontSize:'18px',fontStyle:'Italic',textShadow:'2px 2px 10px'}
+  const inputstyle={width:'300px',border:'1px solid #ddd', borderRadius:'3px',outline:'0',padding:'7px',backgroundColor:'#fff',boxShadow:'inset 1px 1px 5px rgba(0 ,0 ,0 ,0.3)'}
   const navigate = useNavigate();
-  const [imageURL1, setImageURL1] = useState('');
-  const [imageURL2, setImageURL2] = useState('');
-  const [imageURL3, setImageURL3] = useState('');
-  const [imageURL4, setImageURL4] = useState('');
-  const [imageURL5, setImageURL5] = useState('');
+  const [imageURLs, setImageURLs] = useState(['', '', '', '', '']);
   const [Name , setName]= useState('');
   const [banquetType , setBanquetType]= useState('');
   const [location , setLocation]= useState('');
@@ -29,140 +20,70 @@ const abc ={
   useEffect(() => {
     if(!localStorage.getItem('authToken'))
     { 
-      navigate("/login")
+       navigate("/login")
     }
- 
   })
-  
-  const handleImageUpload = async (e) => {
-    e.preventDefault(); 
- const file = e.target.files[0];
- const dataURL = await covertToBase64(file)
- console.log(dataURL);
-    if (e.target.name === "image1"){setImageURL1(dataURL)} 
-     else if (e.target.name === "image2") { setImageURL2(dataURL) }
-     else if (e.target.name === "image3") { setImageURL3(dataURL) }
-     else if (e.target.name === "image4") { setImageURL4(dataURL) }
-     else { setImageURL5(dataURL) }
- 
-  }
+  const handleImageUpload = async (e, index) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    const dataURL = await covertToBase64(file);
+    const updatedImageURLs = [...imageURLs];
+    updatedImageURLs[index] = dataURL;
+    setImageURLs(updatedImageURLs);
+  };
+
 
   const handleClick = async (e) => {
-    e.preventDefault()
-     const response = await fetch("http://localhost:4444/managerData", {
-       method: 'POST',
-       headers: {
-         'Content-Type': 'application/json'
-       },
-       body: JSON.stringify({ Image1: imageURL1,Image2:imageURL2,Image3:imageURL3,Image4:imageURL4,Image5:imageURL5,Name:Name,Banquet_Type:banquetType,capacity:capacity,location:location,description:description,banquet_name:banquet_name})
-     })
-
-    
-  }
-
+    e.preventDefault();
+    const response = await fetch("http://localhost:4444/managerData", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        Images: imageURLs,
+        Name,
+        Banquet_Type: banquetType,
+        capacity,
+        location,
+        description,
+        banquet_name
+      })
+    });
+  };
   return (
     <>
-    <Navbar2></Navbar2>
+    <div><Navbar2></Navbar2></div>
+    <br></br>
+    <br></br>
+  
     <div className="center-content">
-      
        <div>
       <>
-     
-     
-      <div className="background-container" style={{}}>
+      <div className="background-container" style={{ backgroundImage: `url(${background})`,backgroundRepeat:"no-repeat",backgroundSize:"cover",width:"100%"}}>
         <title>Event Form</title>
-        <h1 style={{ color: 'blue', textAlign: 'center' }}>Event Registration Form</h1>
-        <div
-          className="ui-state-default ui-corner-all"
-          title=".ui-icon-mail-closed"
-          style={{ backgroundColor: 'lightblue' }}
-        >
-          <span className="ui-icon ui-icon-mail-closed" />
-        </div>
-        <div
-          className="ui-state-default ui-corner-all"
-          title=".ui-icon-check"
-          style={{ backgroundColor: 'lightgreen' }}
-        >
-          <span className="ui-icon ui-icon-check" />
-        </div>
-        <div
-          className="ui-state-default ui-corner-all"
-          title=".ui-icon-plusthick"
-          style={{ backgroundColor: 'lightyellow' }}
-        >
-          <span className="ui-icon ui-icon-plusthick" />
-        </div>
-        
-        <form className="form-container">
-          <label htmlFor="images">Select 1 Images:</label>
-          <input type="file" name="image1" accept =".jpeg,.png,.jpg" resizeMode='contain' onChange={handleImageUpload} />
-          {imageURL1 && (
-            <div style={{display:"flex"}}>
-              <h3>Uploaded Image:</h3>
-              <img src={imageURL1} alt="Uploaded" width="200" />
-            </div>
-          )}
+        <h1 style={{ color: '#0d0e2e', textAlign: 'center', fontStyle: 'italic'}}>Event Registration Form</h1>
+
+        <form className="form-container" style={{  maxWidth: '600px',  padding: '20px', borderRadius: '10px', margin :'0px 0px 0px 359px',backgroundColor: 'rgba(148,188,189,0.5)' }}>
+          
+          <label htmlFor="name" style={formstyle}>Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input style={inputstyle} type="text" id="name" name="name" placeholder="Enter your Name" required="" onChange={(e)=>{setName(e.target.value)}}/>
           <br />
           <br />
-          <label htmlFor="images">Select 2 Images:</label>
-          <input type="file" id="images" name="image2" accept=".jpeg,.png,.jpg" onChange={handleImageUpload}/>
-          {imageURL2 && (
-            <div style={{display:"flex"}}>
-              <h3>Uploaded Image:</h3>
-              <img src={imageURL2} alt="Uploaded" width="200" />
-            </div>
-          )}
-          <br />
-          <br />
-          <label htmlFor="images">Select 3 Images:</label>
-          <input type="file" id="images" name="image3" accept=".jpeg,.png,.jpg" onChange={handleImageUpload} />
-          {imageURL3 && (
-            <div style={{display:"flex"}}>
-              <h3>Uploaded Image:</h3>
-              <img src={imageURL3} alt="Uploaded" width="200" />
-            </div>
-          )}
-          <br />
-          <br />
-          <label htmlFor="images">Select 4 Images:</label>
-          <input type="file" id="images" name="image4" accept=".jpeg,.png,.jpg"onChange={handleImageUpload} />
-          {imageURL4 && (
-            <div style={{display:"flex"}}>
-              <h3>Uploaded Image:</h3>
-              <img src={imageURL4} alt="Uploaded" width="200" />
-            </div>
-          )}
-          <br />
-          <br />
-          <label htmlFor="images">Select 5 Images:</label>
-          <input type="file" id="images" name="image5" accept=".jpeg,.png,.jpg" onChange={handleImageUpload}/>
-          {imageURL5 && (
-            <div style={{display:"flex"}}>
-              <h3>Uploaded Image:</h3>
-              <img src={imageURL5} alt="Uploaded" width="200" />
-            </div>
-          )}
-          <br />
-          <br />
-          <label htmlFor="name">Name:</label>
-          <input type="text" id="name" name="name" required="" onChange={(e)=>{setName(e.target.value)}}/>
-          <br />
-          <br />
-          <label htmlFor="banquetType">Banquet Type:</label>
-          <select id="banquetType" value={banquetType} name="banquetType" required="" onChange={(e)=>{setBanquetType(e.target.value)}}>
+          <label htmlFor="banquetType" style={formstyle}>Banquet Type:&nbsp;&nbsp;</label>
+          <select style={inputstyle} id="banquetType" value={banquetType} name="banquetType" required="" onChange={(e)=>{setBanquetType(e.target.value)}}>
             <option value="indoor">Indoor</option>
             <option value="outdoor">Outdoor</option>
             <option value="both">Both</option>
           </select>
           <br />
           <br />
-          <label htmlFor="location">Location:</label>
+          <label htmlFor="location" style={formstyle}>Location:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
           {/* <input type="text" id="location"  required=""   />
           <label htmlFor="stateDropdown">Select State:</label> */}
-      <select
+      <select style={inputstyle}
         name="location"
-        id="stateDropdown"
+        id="location"
         value={location}
         onChange={(e)=>{setLocation(e.target.value)}}
       >  
@@ -206,31 +127,41 @@ const abc ={
           
           <br />
           <br />
-          <label htmlFor="capacity">Capacity:</label>
-          <input type="number" id="capacity" name="capacity" required="" onChange={(e)=>{setCapacity(e.target.value)}}/>
+          <label htmlFor="capacity" style={formstyle}>Capacity:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input style={inputstyle} placeholder="Enter Number of person" type="number" id="capacity" name="capacity" required="" onChange={(e)=>{setCapacity(e.target.value)}}/>
           <br />
           <br />
-          <label htmlFor="name">Banquet Name:</label>
-          <input type="text" id="name" name="banquet_name" required="" onChange={(e)=>{setbanquet_name(e.target.value)}}/>
+          <label htmlFor="banquetname" style={formstyle}>Banquet Name:</label>
+          <input style={inputstyle} placeholder="Enter Banquet Name" type="text" id="banquetname" name="banquet_name" required="" onChange={(e)=>{setbanquet_name(e.target.value)}}/>
           <br/>
           <br/>
-          <label htmlFor="capacity">Description:</label>
-          <textarea name="description" onChange={(e)=>{setDescription(e.target.value)}}>Enter Description here...</textarea>
+          <label htmlFor="description" style={formstyle}>Description:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <textarea style={inputstyle} placeholder="Description of the Banquet " name="description" onChange={(e)=>{setDescription(e.target.value)}}></textarea>
           
-          <button type="submit" onClick={handleClick} >Submit</button>
+          
+          <br/>
+          {imageURLs.map((url, index) => (
+                <React.Fragment key={index}>
+                  <br />
+                  <label style={formstyle} htmlFor={`image${index + 1}`} >Select Image {index + 1}:</label>
+                  <input style={{width:'87px',border:'1px solid #ddd', borderRadius:'3px',outline:'0',padding:'3px',backgroundColor:'#fff',boxShadow:'inset 1px 1px 5px rgba(0 ,0 ,0 ,0.3)'}} type="file" id={`image${index + 1}`} name={`image${index + 1}`} accept=".jpeg,.png,.jpg" onChange={(e) => handleImageUpload(e, index)} />
+                  {url && (
+                    <div style={{ display: "flex" }}>
+                      <h3>Uploaded Image:</h3>
+                      <img src={url} alt={`Uploaded ${index + 1}`} width="200" />
+                    </div>
+                  )}
+                </React.Fragment>
+              ))}
+          <br />
+          <button style={{ width:'100px',fontFamily:'sans-serif',borderRadius:'3px', backgroundColor:'pink',padding:'7px',fontSize:'16px',fontWeight:'600',cursor:'pointer',border:'1px solid',boxShadow:'1px 1px 5px'}} type="submit" onClick={handleClick} >Submit</button>
         </form> </div>
       </>
-   
-
+    </div><Footer></Footer>
     </div>
-    </div>
-    <Footer></Footer>
   </>
-    
   );
 };
-
-
 export default AfterLoginManager;
 
 function covertToBase64(file){

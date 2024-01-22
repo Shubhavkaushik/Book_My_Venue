@@ -1,9 +1,9 @@
 .blanket-hall-card {
     max-width: 250px;
-    
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
     margin: 20px;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 25px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;

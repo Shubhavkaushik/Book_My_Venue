@@ -2,7 +2,6 @@
 import { useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import Cart from './Dialogue';
 
 
 // Navbar.js

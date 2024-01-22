@@ -5,7 +5,7 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 const Signup = () => {
  
-
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const [fullName, setfullName] = useState("")
   const [category, setcategory] = useState("")
   const [location, setlocation] = useState("")
@@ -18,7 +18,7 @@ const Signup = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-
+        setButtonDisabled(true);
     if (password !== confirmpassword) 
      alert("Password and ConfirmPassword not Match")
 
@@ -37,11 +37,21 @@ const Signup = () => {
       const data = await response.json()
      
       if (data === "User Exist")
-      { alert("User Exist")}
+     { alert("User Exist")}
     
-      
+     if (data === "Login Successfully")
+     { alert("Login Successfully")
+     setTimeout(() => {
+      navigate("/login");
+    }, 1000);
+    }
     
     }
+
+    setTimeout(() => {
+      setButtonDisabled(false);
+    }, 1000);
+
   }
 
 
@@ -150,7 +160,7 @@ const Signup = () => {
             Existing User ? <Link to="/login">Login</Link>
           </h4>
          
-          <button type="submit" onClick={handleClick}>Signup</button>
+          <button type="submit" onClick={handleClick} disabled={buttonDisabled}>Signup</button>
         </form>
         
       </div>

@@ -49,6 +49,13 @@ const AfterLoginUser = () => {
   // setfilterData(data)
  
   // };
+
+  // Image={filteritems.Image1}
+  // banquetname={filteritems.banquet_name}
+  // capacity={filteritems.capacity}
+  // location={filteritems.location}
+  // description={filteritems.description}
+  // Ownername={filteritems.Name}
  
   const fetchData = async () => {
     try {
@@ -104,35 +111,6 @@ const AfterLoginUser = () => {
 <div className='container'>
 
 
-{/* {
-  state.length !== 0
-    ? state.map((data) => (
-        <div className='row mb-3' key={data._id}>
-          <div className='fs-3 m-3'>{data.StateName}</div>
-          <hr />
-          {banquetdata.length !== 0
-            ? banquetdata
-                .filter((item) => item.location === data.StateName)
-                .map((filteritems) => (
-                  <div className='col-12  col-md-6  col-lg-4' key={filteritems._id}>
-
-                  <Card 
-                  Image={filteritems.Image1}
-                  banquetname ={filteritems.banquet_name}
-                  capacity ={filteritems.capacity}
-                  location ={filteritems.location}
-                  description ={filteritems.description}
-                  Ownername ={filteritems.Name}
-                  ></Card></div>
-                ))
-            : <div>Sorry !! banquetdata is empty</div>
-          }
-        </div>
-      ))
-    : <div>Sorry !! state is empty</div>
-} */}
-
-
 {
   state.length !== 0
     ? state.map((data) => {
@@ -149,13 +127,7 @@ const AfterLoginUser = () => {
                 .map((filteritems) => {
                   return (
                     <div key={filteritems._id} style={{display:"flex"}} >
-                      <Card
-                        Image={filteritems.Image1}
-                        banquetname={filteritems.banquet_name}
-                        capacity={filteritems.capacity}
-                        location={filteritems.location}
-                        description={filteritems.description}
-                        Ownername={filteritems.Name}
+                      <Card banquetitem ={filteritems}
                       ></Card>
                     </div>
                   );
@@ -175,20 +147,7 @@ const AfterLoginUser = () => {
 
 </div>
 
-{/* <div style={{ display: "flex", flexWrap: "wrap" }}>
-{filterdata.map((x) => {
-    return (
-      <Card key={x.id} source={x.Image1} name={x.Name} des={x.description}
-        style={{
-          width: "100%",
-          flexBasis: "calc(25% - 20px)", // For desktop (4 columns)
-          margin: "15px", padding: "10px"
-        }}
-      />
-    );
-  })}
-  
-</div>  */}
+
 </>
 <Footer></Footer>
     </>

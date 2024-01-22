@@ -1,8 +1,7 @@
-import React from 'react'
+import React  from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 const Home = () => {
-
     const [activeVideo, setActiveVideo] = useState(1);
 
     const handleVideoClick = (videoNumber) => {
@@ -104,7 +103,7 @@ const Home = () => {
           Look no further! We are thrilled to invite you to explore our website
           and discover the perfect venue that will bring your event to life.
         </p>
-        <a href="#">Read More</a>
+        <Link to="/knowmore">Read More</Link>
       </div>
       <div className={`content ${activeVideo === 2 ? 'active' : ''}`}>
         {/* Content for the 2 active video */}
@@ -119,7 +118,7 @@ const Home = () => {
           invitation to you to discover the perfect venue for your upcoming
           birthday celebration on our website.
         </p>
-        <a href="#">Read More</a>
+        <Link to="/knowmore">Read More</Link>
       </div>
       <div className={`content ${activeVideo === 3 ? 'active' : ''}`}>
         {/* Content for the 3 active video */}
@@ -134,7 +133,7 @@ const Home = () => {
           website and discover the ideal venue for your friend's upcoming
           celebration.
         </p>
-        <a href="#">Read More</a>
+        <Link to="/knowmore">Read More</Link>
       </div>
       <div className={`content ${activeVideo === 4 ? 'active' : ''}`}>
         {/* Content for the 4 active video */}
@@ -149,7 +148,7 @@ const Home = () => {
           explore our website and discover the perfect venue to host your upcoming
           festival extravaganza
         </p>
-        <a href="#">Read More</a>
+        <Link to="/knowmore">Read More</Link>
       </div>
       <div className={`content ${activeVideo === 5 ? 'active' : ''}`}>
         {/* Content for the 5 active video */}
@@ -164,7 +163,7 @@ const Home = () => {
           exclusive invitation to you to explore our website and discover the
           perfect venue for your luxurious venue celebration.
         </p>
-        <a href="#">Read More</a>
+        <Link to="/knowmore">Read More</Link>
       </div>
       
       <div className={`content ${activeVideo === 6 ? 'active' : ''}`}>
@@ -180,7 +179,7 @@ const Home = () => {
           explore our website and discover the ideal meeting venue that will take
           your business gatherings to the next level.
         </p>
-        <a href="#">Read More</a>
+        <Link to="/knowmore">Read More</Link>
       </div>
       
 

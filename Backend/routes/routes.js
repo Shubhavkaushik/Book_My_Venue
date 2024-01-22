@@ -70,16 +70,8 @@ router.post("/SignupData", async (req, res) => {
       await User.create({
         fullName, phoneNumber, newID, password, location, category
       });
-      //     const data ={
-      //       user:{
-      //           id:userData._id
-      //       }}
-
-      // const authToken= jwt.sign(data,jwtSecret);
-      // return res.render('login',{success:true,authToken:authToken});
-
-      //     res.render('login');
-
+      
+      res.json('Login Successfully');
     }
   } catch (error) {
     res.json('Error');
